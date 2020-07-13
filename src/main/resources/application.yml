@@ -1,0 +1,22 @@
+# db 설정
+spring.h2.console.enabled: true
+spring.datasource.url: jdbc:h2:mem:testdb
+spring.datasource.driverClassName: org.h2.Driver
+spring.datasource.username: sa
+spring.datasource.password:
+spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+
+# db log 설정
+logging.level.org.hibernate.SQL: debug
+spring.jpa.properties.hibernate.format_sql: true
+spring.jpa.hibernate.ddl-auto: create
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 927906670531-jk34je9eh33v7m4ojp22ont8delesdio.apps.googleusercontent.com
+            clientSecret: c9hsXU9carfP-jPTlfvhAG5o
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
