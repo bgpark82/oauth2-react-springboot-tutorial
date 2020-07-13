@@ -8,8 +8,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -18,6 +22,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final HttpCookieOAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository;
+    private final CustomOAuth2UserService  customOAuth2UserService;
+    private final OAuth2AuthenticationSuccessHandler  oAuth2AuthenticationSuccessHandler;
+
 
 
     @Override
@@ -54,11 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .and()
                     .redirectionEndpoint()
                         .baseUri("/oauth2/callback/*")
-                        .and();
-//                    .userInfoEndpoint()
-//                        .userService(customOAuth2UserService)
-//                        .and()
-//                    .successHandler(oAuth2AuthenticationSuccessHandler)
+                        .and()
+                    .userInfoEndpoint()
+                        .userService(customOAuth2UserService)
+                        .and()
+                    .successHandler(oAuth2AuthenticationSuccessHandler);
 //                    .failureHandler(oAuth2AuthenticationFailureHandler);
 //
 //        http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
